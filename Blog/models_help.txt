@@ -1,0 +1,7 @@
+数据库的迁移(新版本,旧版本命令已移除)
+首先创建Py文件与数据库的一个迁移关系文件(migrations/0001_initial.py)
+python manage.py makemigrations
+然后迁移数据
+python manage.py migrate
+
+////可以使用python manage.py sqlmigrate AppName 0001查看相应的sql语句

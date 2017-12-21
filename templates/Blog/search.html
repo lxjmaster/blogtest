@@ -1,0 +1,41 @@
+{% extends "Blog/base.html" %}
+
+{% block main %}
+<main class="col-md-8">
+    {% if error_msg %}
+    <p>{{ error_msg }}</p>
+    {% endif %}
+
+    {% for article in article_list %}
+    <article class="post post-{{ article.pk }}">
+        <header class="entry-header">
+            <h1 class="entry-title">
+                <!--
+                这里通过在models中定义一个方法来获取文章的url,还一种直接使用url模板标签来获取符合规则的url
+                 {% url 'detail' article.pk %}
+                -->
+                <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+            </h1>
+            <div class="entry-meta">
+                <span class="post-category"><a href="#">{{ article.category.name }}</a></span>
+                <span class="post-date"><a href="#"><time class="entry-date"
+                                                          datetime="{{ article.creat_time }}">{{ article.creat_time }}</time></a></span>
+                <span class="post-author"><a href="#">{{ article.author }}</a></span>
+                <span class="comments-link"><a href="{% url 'detail' article.pk %}">{{ article.comment_set.count }} 评论</a></span>
+                <span class="views-count"><a href="#">{{ article.views }} 阅读</a></span>
+            </div>
+        </header>
+        <div class="entry-content clearfix">
+            <p>{{ article.excerpt }}</p>
+            <div class="read-more cl-effect-14">
+                <a href="{{ article.get_absolute_url }}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+            </div>
+        </div>
+    </article>
+    {% empty %}
+    <div class="no-post">
+        <p>没有搜索到符合条件的文章</p>
+    </div>
+{% endfor %}
+</main>
+{% endblock main %}
